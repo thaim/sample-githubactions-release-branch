@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
       - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.1
+        uses: anothrNick/github-tag-action@1.26.0
         env:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          TAG_NAME: "$(date +'%y%m%d')"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CUSTOM_TAG: "$(date +'%y%m%d')"
