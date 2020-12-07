@@ -11,10 +11,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: '0'
+      - name: check timezone
+        run: date
       - name: create tag
-        run: echo "CUSTOM_TAG=$(date +'%y%m%d')" >> $GITHUB_ENV
+        run: TZ=-9 echo "CUSTOM_TAG=$(date +'%y%m%d')" >> $GITHUB_ENV
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.26.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CUSTOM_TAG: ${{ env.CUSTOM_TAG }}
+          CUSTOM_TAG: release/${{ env.CUSTOM_TAG }}
+          RELEASE_BRANCHES: release*
